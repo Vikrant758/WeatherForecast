@@ -9,9 +9,9 @@ import 'package:get/get_core/src/get_main.dart';
 import '../main.dart';
 import '../utils/error_messages.dart';
 import '../utils/utils.dart';
+import '../views/home.dart';
 
-class SignInController {
-
+class SignInController extends GetxController{
   logInUserIntoFirebase(
       {required String email, required String password}) async {
     try {
@@ -29,9 +29,7 @@ class SignInController {
                 print("User is signed in broo");
               }
 
-              Get.offAll(() => const MyHomePage(
-                title: "You are logged In",
-              ));
+              Get.offAll(() => const MyHomePage());
             }
           } on FirebaseAuthException catch (e) {
             if (kDebugMode) {

@@ -17,5 +17,5 @@ class OpenWeatherEndpoints {
 
   static const int notFoundStatusCode = 404;
 
-  static const String getCurrentWeatherData = 'weather/';
+  static const String getCurrentWeatherData = 'weather';
 }

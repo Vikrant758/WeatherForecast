@@ -26,7 +26,7 @@ class Utils {
     return hasLetter && hasNumber;
   }
 
-  static Future<dynamic> _getGeoLocationPosition() async {
+  static Future<dynamic> getLatLong() async {
     try {
       PermissionStatus permission = await Permission.location.status;
       if (permission == PermissionStatus.denied) {
@@ -43,8 +43,8 @@ class Utils {
 
       if (permission == PermissionStatus.permanentlyDenied) {
         Utils.showSnackBar(
-            title: "Location Access Required",
-            message: "Click on this pop up to give location permission",
+            title: "Location access required to see forecast report",
+            message: "Click on this popup to give location permission",
             iconWidget: const Icon(Icons.error_outline),
             onTap: () async {
               await Geolocator.openAppSettings();

@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 
 import '../main.dart';
 import '../utils/utils.dart';
+import '../views/home.dart';
 
 class SignUpController extends GetxController {
 
@@ -50,7 +51,6 @@ class SignUpController extends GetxController {
               print("User is signed in broo");
 
               Get.offAll(const MyHomePage(
-                title: "You are logged In",
               ));
             }
           } on FirebaseAuthException catch (e) {
