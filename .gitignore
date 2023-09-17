@@ -44,3 +44,4 @@ app.*.map.json
 firebase_options.dart
 GoogleService-info.plist
 firebase_app_id_file.json
+credentials.dart

@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Utils {
-
   static bool isValidEmail(String email) {
     final emailRegex = RegExp(
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
@@ -25,7 +26,61 @@ class Utils {
     return hasLetter && hasNumber;
   }
 
-  static showSnackBar({required String title, required String message, Function? onTap,
+  static Future<dynamic> _getGeoLocationPosition() async {
+    try {
+      PermissionStatus permission = await Permission.location.status;
+      if (permission == PermissionStatus.denied) {
+        permission = await Permission.location.request();
+        if (permission == PermissionStatus.denied) {
+          Utils.showSnackBar(
+              title: "Please Allow the access to location",
+              message:
+                  "If you want to see weather report please allow location access",
+              iconWidget: const Icon(Icons.error_outline));
+          return {'location_found': false};
+        }
+      }
+
+      if (permission == PermissionStatus.permanentlyDenied) {
+        Utils.showSnackBar(
+            title: "Location Access Required",
+            message: "Click on this pop up to give location permission",
+            iconWidget: const Icon(Icons.error_outline),
+            onTap: () async {
+              await Geolocator.openAppSettings();
+            });
+        return {'location_found': false};
+      }
+
+      var desiredAccuracy = permission == PermissionStatus.granted
+          ? LocationAccuracy.high
+          : LocationAccuracy.low;
+
+      Position getCurrentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: desiredAccuracy,
+        timeLimit: const Duration(seconds: 10),
+      );
+
+      print(getCurrentPosition.latitude);
+      print(getCurrentPosition.longitude);
+
+      return {
+        'location_found': true,
+        'lat': getCurrentPosition.latitude,
+        'long': getCurrentPosition.longitude
+      };
+    } catch (e) {
+      print(e);
+      return {
+        'location_found': false,
+      };
+    }
+  }
+
+  static showSnackBar(
+      {required String title,
+      required String message,
+      Function? onTap,
       Widget iconWidget = const Icon(Icons.alarm)}) {
     Get.snackbar(
       title,
