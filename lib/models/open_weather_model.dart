@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_weather_application/services/open_weather_service/open_weather_endpoints.dart';
 
 class OpenWeatherModel {
@@ -16,16 +17,23 @@ class OpenWeatherModel {
 
   fromJson(Map data) {
     if (data.containsKey('cod') && data['cod'] == OpenWeatherEndpoints.successStatusCode) {
-      showForecast = true;
-      placeName = data['name'];
-      weatherInfo = '${data['weather'][0]['main']}, ${data['weather'][0]['description']}';
-      weatherIconUrl = '$openWeatherIconUrl${data['weather'][0]['icon']}.png';
+      try {
+        showForecast = true;
+        placeName = data['name'];
+        weatherInfo = '${data['weather'][0]['main']}, ${data['weather'][0]['description']}';
+        weatherIconUrl = '$openWeatherIconUrl${data['weather'][0]['icon']}.png';
 
-      temperatureInCelsius = convertKelvinToCelsius(data['main']['temp']);
-      minimumTemperatureInCelsius = convertKelvinToCelsius(data['main']['temp_min']);
-      maximumTemperatureInCelsius = convertKelvinToCelsius(data['main']['temp_max']);
-      temperatureFeelsLike = convertKelvinToCelsius(data['main']['feels_like']);
-      humidityInPercentage = data['main']['humidity'];
+        temperatureInCelsius = convertKelvinToCelsius(data['main']['temp']);
+        minimumTemperatureInCelsius = convertKelvinToCelsius(data['main']['temp_min']);
+        maximumTemperatureInCelsius = convertKelvinToCelsius(data['main']['temp_max']);
+        temperatureFeelsLike = convertKelvinToCelsius(data['main']['feels_like']);
+        humidityInPercentage = data['main']['humidity'];
+      } catch (e) {
+        if (kDebugMode) {
+          print(e);
+        }
+        showForecast = false;
+      }
     } else {
       showForecast = false;
     }

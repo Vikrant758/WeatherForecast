@@ -19,13 +19,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
   OpenWeatherController controller = Get.put(OpenWeatherController());
-
-  void _incrementCounter() async {
-    Utils.getLatLong();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,11 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

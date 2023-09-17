@@ -5,8 +5,6 @@ import 'package:flutter_weather_application/views/sign_in.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-import '../utils/utils.dart';
-
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 

@@ -35,10 +35,8 @@ class OpenWeatherService {
       }
       return {'status': false};
     } on DioException catch (e) {
-      print(e);
       return {'status': false};
     } catch (e) {
-      print(e);
       return {'status': false};
     }
   }

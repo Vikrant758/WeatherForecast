@@ -10,36 +10,20 @@ import '../utils/utils.dart';
 import '../views/weather_forecaste.dart';
 
 class OpenWeatherController extends GetxController {
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    print("OnInit OpenWeatherController");
-    super.onInit();
-  }
-
   OpenWeatherModel openWeatherModel = OpenWeatherModel();
 
   getCurrentDayForecastReport() async {
     var latLongData = await Utils.getLatLong();
-    print(latLongData);
     if (latLongData is Map && latLongData['location_found']) {
-      var weatherInfo = await OpenWeatherService().getCurrentWeatherInformation(lat: latLongData['lat'].toString(), long: latLongData['long'].toString(), appId: Credentials.openWeatherApiKey);
-      print(weatherInfo);
+      var weatherInfo = await OpenWeatherService().getCurrentWeatherInformation(
+          lat: latLongData['lat'].toString(),
+          long: latLongData['long'].toString(),
+          appId: Credentials.openWeatherApiKey);
       if (weatherInfo is Map && weatherInfo['status']) {
-        print("We found the weather information");
         openWeatherModel.fromJson(weatherInfo['data']);
-        print(openWeatherModel.showForecast);
-        print(openWeatherModel.placeName);
-        print(openWeatherModel.weatherInfo);
-        print(openWeatherModel.humidityInPercentage);
-        print(openWeatherModel.maximumTemperatureInCelsius);
-        print(openWeatherModel.minimumTemperatureInCelsius);
-        print(openWeatherModel.temperatureInCelsius);
-        print(openWeatherModel.weatherIconUrl);
 
         if (openWeatherModel.showForecast) {
-          Get.to(()=> const WeatherForecast());
+          Get.to(() => const WeatherForecast());
         }
       } else {
         Utils.showSnackBar(
@@ -50,7 +34,8 @@ class OpenWeatherController extends GetxController {
     } else {
       Utils.showSnackBar(
           title: "Sorry couldn't find your location",
-          message: "Please try again or Check you location settings are on or not",
+          message:
+              "Please try again or Check you location settings are on or not",
           iconWidget: const Icon(Icons.error_outline));
     }
   }

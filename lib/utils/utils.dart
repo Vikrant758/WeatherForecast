@@ -61,17 +61,12 @@ class Utils {
         timeLimit: const Duration(seconds: 20),
       );
 
-      print(getCurrentPosition.latitude);
-      print(getCurrentPosition.longitude);
-
       return {
         'location_found': true,
         'lat': getCurrentPosition.latitude,
         'long': getCurrentPosition.longitude
       };
     } catch (e) {
-      print("Comes here broo");
-      print(e);
       return {
         'location_found': false,
       };
