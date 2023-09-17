@@ -58,7 +58,7 @@ class Utils {
 
       Position getCurrentPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: desiredAccuracy,
-        timeLimit: const Duration(seconds: 10),
+        timeLimit: const Duration(seconds: 20),
       );
 
       print(getCurrentPosition.latitude);
@@ -70,6 +70,7 @@ class Utils {
         'long': getCurrentPosition.longitude
       };
     } catch (e) {
+      print("Comes here broo");
       print(e);
       return {
         'location_found': false,
